@@ -39,7 +39,9 @@ test.describe('domestic transfer', () => {
     await signIn(page);
   });
 
-  test('reviews a valid saved-payee transfer without confirming it', async ({ page }) => {
+  test('reviews a valid saved-payee transfer without confirming it', async ({ page, gremlinRelease }) => {
+    // BUG: Release 2 fee policy changed: expected 750 HUF (0.3% of 250,000 HUF), observed 7,500 HUF. Not healed, see heal-report.json.
+    test.fail(gremlinRelease === 2, 'BUG: Release 2 fee policy changed: expected 750 HUF (0.3% of 250,000 HUF), observed 7,500 HUF. Not healed, see heal-report.json.');
     await prepareTransfer(page, 250_000);
     await continueToReview(page);
 
@@ -73,7 +75,9 @@ test.describe('domestic transfer', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Review transfer' })).toHaveCount(0);
   });
 
-  test('calculates fee minimum, percentage, and maximum boundaries', async ({ page }) => {
+  test('calculates fee minimum, percentage, and maximum boundaries', async ({ page, gremlinRelease }) => {
+    // BUG: Release 2 fee policy changed: expected 200 HUF minimum, 300 HUF/100k, 750 HUF/250k, and 6,000 HUF maximum (0.3% rule, min 200, max 6,000 HUF); observed 300 HUF, 3,000 HUF, 7,500 HUF, and 60,000 HUF. Not healed, see heal-report.json.
+    test.fail(gremlinRelease === 2, 'BUG: Release 2 fee policy changed: expected 200 HUF minimum, 300 HUF/100k, 750 HUF/250k, and 6,000 HUF maximum (0.3% rule, min 200, max 6,000 HUF); observed 300 HUF, 3,000 HUF, 7,500 HUF, and 60,000 HUF. Not healed, see heal-report.json.');
     const examples = [
       { amount: 10_000, account: 'Everyday Account', fee: '200 HUF', total: '10,200 HUF' },
       { amount: 100_000, account: 'Everyday Account', fee: '300 HUF', total: '100,300 HUF' },

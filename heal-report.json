@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T00:00:00Z",
+  "release": 2,
+  "tool": "copilot-vscode",
+  "model": "Auto (copilot)",
+  "entries": [
+    {
+      "test": "tests/gremlin-bank.transfer.spec.ts:42 > domestic transfer > reviews a valid saved-payee transfer without confirming it",
+      "file": "tests/gremlin-bank.transfer.spec.ts",
+      "error": "expect(locator).toContainText(expected) failed: expected \"750 HUF\", received \"7,500 HUF\"",
+      "classification": "BUG",
+      "reason": "The transfer fee rule is 0.3% of the amount, with the documented minimum and maximum applied. A 250,000 HUF transfer is expected to show 750 HUF, but the page shows 7,500 HUF.",
+      "change": "Added test.fail() with a BUG comment. Assertion unchanged.",
+      "expectedValueChanged": false,
+      "expected": "750 HUF (0.3% of 250,000 HUF)",
+      "observed": "7,500 HUF",
+      "tracePath": "test-results/tests-gremlin-bank.transfe-dd7af-nsfer-without-confirming-it-chromium/trace.zip",
+      "model": "Auto (copilot)",
+      "tool": "copilot-vscode"
+    },
+    {
+      "test": "tests/gremlin-bank.transfer.spec.ts:78 > domestic transfer > calculates fee minimum, percentage, and maximum boundaries",
+      "file": "tests/gremlin-bank.transfer.spec.ts",
+      "error": "expect(locator).toContainText(expected) failed: expected \"200 HUF\", received \"300 HUF\"",
+      "classification": "BUG",
+      "reason": "The fee rule is 0.3% of the amount, with a minimum of 200 HUF and a maximum of 6,000 HUF. The page shows 300 HUF for 10,000 HUF and 3,000 HUF, 7,500 HUF, and 60,000 HUF for the later boundary cases.",
+      "change": "Added test.fail() with a BUG comment. Assertion unchanged.",
+      "expectedValueChanged": false,
+      "expected": "200 HUF minimum, 300 HUF for 100,000 HUF, 750 HUF for 250,000 HUF, 6,000 HUF maximum (0.3% rule)",
+      "observed": "300 HUF minimum, 3,000 HUF for 100,000 HUF, 7,500 HUF for 250,000 HUF, 60,000 HUF maximum",
+      "tracePath": "test-results/tests-gremlin-bank.transfe-d938b-tage-and-maximum-boundaries-chromium/trace.zip",
+      "model": "Auto (copilot)",
+      "tool": "copilot-vscode"
+    }
+  ]
+}
