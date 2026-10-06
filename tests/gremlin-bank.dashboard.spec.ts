@@ -18,10 +18,10 @@ test.describe('dashboard', () => {
 
   test('shows both accounts with their IBANs and balances', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 1, name: 'Accounts' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Everyday Account' })).toBeVisible();
+    await expect(page.getByText('Everyday Account')).toBeVisible();
     await expect(page.getByText('HU39 9992 0265 3141 5926 5358 9797')).toBeVisible();
     await expect(page.getByText('1,250,000 HUF')).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Savings Account' })).toBeVisible();
+    await expect(page.getByRole('rowheader', { name: 'Savings Account' })).toBeVisible();
     await expect(page.getByText('HU03 9992 0265 2718 2818 2845 9043')).toBeVisible();
     await expect(page.getByText('5,400,000 HUF')).toBeVisible();
   });

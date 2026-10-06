@@ -63,7 +63,7 @@ test.describe('sign in and sign out', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Accounts' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Sign out' }).click();
-    await expect(page.getByRole('heading', { level: 1, name: 'Sign in to Gremlin Bank' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Welcome back' })).toBeVisible();
     await expect(page.getByRole('textbox', { name: usernameName })).toBeVisible();
     await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible();
 

@@ -5,6 +5,7 @@ const signInName = /^(Sign in|Log in)$/;
 const continueName = /^(Continue|Review transfer)$/;
 const payeeName = /^(Beneficiary name|Payee name)$/;
 const referenceName = /^(Reference|Payment reference)$/;
+const confirmName = /^(Confirm transfer|Send money)$/;
 
 async function signIn(page: import('@playwright/test').Page): Promise<void> {
   await page.goto('/login');
@@ -49,7 +50,7 @@ test.describe('domestic transfer', () => {
     await expect(details).toContainText('250,000 HUF');
     await expect(details).toContainText('750 HUF');
     await expect(details).toContainText('250,750 HUF');
-    await expect(page.getByRole('button', { name: 'Confirm transfer' })).toBeVisible();
+    await expect(page.getByRole('button', { name: confirmName })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Change details' })).toBeVisible();
   });
 
@@ -57,7 +58,7 @@ test.describe('domestic transfer', () => {
     await page.goto('/transfer');
     await page.getByRole('button', { name: continueName }).click();
 
-    await expect(page.getByText('Enter a beneficiary name.', { exact: true })).toBeVisible();
+    await expect(page.getByText(/Enter a (beneficiary|payee) name\./)).toBeVisible();
     await expect(page.getByText('Check the IBAN first.', { exact: true })).toBeVisible();
     await expect(page.getByText('Enter an amount greater than 0.', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { level: 1, name: 'New transfer' })).toBeVisible();

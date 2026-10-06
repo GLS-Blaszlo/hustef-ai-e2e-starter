@@ -42,6 +42,11 @@ export async function pinRelease(context: BrowserContext, baseURL: string): Prom
   }
 }
 
+/** Answers the cookie consent dialog before the first page view. */
+export async function skipCookieDialog(context: BrowserContext, baseURL: string): Promise<void> {
+  await context.addCookies([{ name: 'gb_consent', value: 'necessary', url: baseURL }]);
+}
+
 type WorkerFixtures = {
   /** The Gremlin Bank release under test: GREMLIN_RELEASE, or what /health reports right now. */
   gremlinRelease: Release;
@@ -50,6 +55,7 @@ type WorkerFixtures = {
 export const test = base.extend<{}, WorkerFixtures>({
   context: async ({ context, baseURL }, use) => {
     await pinRelease(context, baseURL!);
+    await skipCookieDialog(context, baseURL!);
     await use(context);
   },
 
